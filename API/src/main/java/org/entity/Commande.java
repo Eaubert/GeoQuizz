@@ -29,7 +29,6 @@ public class Commande implements Serializable {
     @OneToMany(mappedBy="commande")
     private Set<SandwichCommande> sandwichCommande = new HashSet<SandwichCommande>();
 
-
     public Commande() {
     }
 
