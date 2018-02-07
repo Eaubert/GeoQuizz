@@ -42,7 +42,7 @@ public class Partie implements Serializable{
     private Map map = new Map();
 
     @ManyToMany(mappedBy = "parties")
-    private Set<Photo> photos = new HashSet<Photo>();
+    private Set<Photo> photos = new HashSet<>();
 
     public Partie() {
     }

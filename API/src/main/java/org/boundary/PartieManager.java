@@ -26,13 +26,13 @@ public class PartieManager {
     }
 
     public Partie findById(String id) {
-        try{
+        try {
             return this.em.find(Partie.class, id);
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
-  
+
     public Partie save(Partie p) {
         p.setId(UUID.randomUUID().toString());
 
@@ -43,18 +43,23 @@ public class PartieManager {
         List listPhotos = em.createQuery(
                 "SELECT p FROM Photo p WHERE map_id = :idmap ORDER BY RANDOM()")
                 .setParameter("idmap", p.getMap().getId())
-                .setMaxResults( p.getNbPhotos())
+                .setMaxResults(p.getNbPhotos())
                 .getResultList();
         Set<Photo> set = new HashSet<Photo>(listPhotos);
         p.setPhotos(set);
 
+        set.forEach((photo) -> {
+            photo.addParties(p);
+        });
         return this.em.merge(p);
+
     }
 
     public void delete(String id) {
         try {
             Partie ref = this.em.getReference(Partie.class, id);
             this.em.remove(ref);
-        } catch (EntityNotFoundException e) { }
+        } catch (EntityNotFoundException e) {
+        }
     }
 }

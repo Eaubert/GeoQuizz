@@ -121,7 +121,6 @@ public class Map implements Serializable {
                 .add("longitude", this.longitude)
                 .add("latitude", this.latitude)
                 .add("distance", this.distance)
-                .add("nbPhotos", this.photos.size())
                 .build();
     }
 

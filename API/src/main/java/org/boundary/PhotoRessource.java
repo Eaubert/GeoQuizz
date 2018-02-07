@@ -66,7 +66,7 @@ public class PhotoRessource {
         if (p == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(p.getMap().map2Json()).build();
+        return Response.ok(p.getMap().buildJson()).build();
     }
 
 

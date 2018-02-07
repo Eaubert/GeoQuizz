@@ -121,7 +121,6 @@ public class PartieRessource {
                     .add("links", m.getLinks())
                     .build()).build();
         }
-        ;
     }
 
     @POST
