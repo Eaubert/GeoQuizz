@@ -66,6 +66,18 @@ public class MapRessource {
                 .orElseThrow(() -> new MapNotFound("Ressource non disponible" + uriInfo.getPath()));
     }
 
+    @POST
+    @Secured
+    public Response addMap(JsonObject json) {
+
+        try{
+
+        }catch(Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return null;
+    }
+
 
 
 }
