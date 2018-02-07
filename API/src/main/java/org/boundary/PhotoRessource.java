@@ -66,7 +66,7 @@ public class PhotoRessource {
     @POST
     @Secured
     public Response addPhotos(JsonObject json) {
-        String id,url;
+        String idMap,url;
         Float latitude,longitude;
         Integer nbPhotos;
 
@@ -77,11 +77,11 @@ public class PhotoRessource {
             for(int i=0;i<nbPhotos; i++){
                 JsonObject photo = photos.getJsonObject(i);
                 url = photo.getString("url");
-                id = photo.getString("id");
+                idMap = photo.getString("idMap");
                 latitude = Float.parseFloat(photo.getString("latitude"));
                 longitude = Float.parseFloat(photo.getString("longitude"));
 
-                Map map = mm.findById(id);
+                Map map = mm.findById(idMap);
                 Photo p = new Photo(url,longitude,latitude, map);
                 map.addPhoto(p);
                 pm.save(p);
@@ -100,6 +100,20 @@ public class PhotoRessource {
             jab.add(p.buildJson());
         });
         return jab.build();
+    }
+
+    @DELETE
+    @Secured
+    @Path("{id}")
+    @Produces("application/json")
+    public Response methodeSecurisee(@PathParam("id") Long id) {
+        // La méthode est annotée avec @Secured
+        // Le filtre est exécuté
+        // On doit avoir un token valide
+        String str = "Sécurisé";
+        JsonObject jsonResult = Json.createObjectBuilder().
+                add("status", str).build();
+        return Response.ok().entity(jsonResult).build();
     }
 
 }

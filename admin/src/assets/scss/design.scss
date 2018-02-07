@@ -1,0 +1,48 @@
+/* On importe bootstrap */
+@import "./bootstrap/bootstrap-custom";
+
+/* On fait ce qu'on veut après */
+
+h1, h2 , .jumbotron h1 {
+  font-weight: normal;
+  text-align: center;
+  color: #003366;
+  font-size: 500%;
+  text-decoration:underline;
+}
+
+h3{
+  font-weight: normal;
+  text-align: center;
+  color: #003366;
+  font-size: 150%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+.container{
+  border: 1px solid #003366;
+  border-radius: 7px;
+  padding-bottom: 20px;
+}
+
+.decale{
+  margin-left: 20px;
+}
+
+
+body{
+  font-family: 'Lobster';
+}
