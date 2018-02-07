@@ -30,6 +30,9 @@ public class PhotoRessource {
     @Inject
     PhotoManager pm;
 
+    @Inject
+    MapManager mm;
+
     @Context
     UriInfo uriInfo;
 
@@ -57,6 +60,37 @@ public class PhotoRessource {
         Map map = p.getMap();
 
         return Response.ok(map.map2Json()).build();
+    }
+
+
+    @POST
+    @Secured
+    public Response addPhotos(JsonObject json) {
+        String id,url;
+        Float latitude,longitude;
+        Integer nbPhotos;
+
+        try{
+            nbPhotos = Integer.parseInt(json.getString("nbPhotos"));
+
+            JsonArray photos = json.getJsonArray("photos");
+            for(int i=0;i<nbPhotos; i++){
+                JsonObject photo = photos.getJsonObject(i);
+                url = photo.getString("url");
+                id = photo.getString("id");
+                latitude = Float.parseFloat(photo.getString("latitude"));
+                longitude = Float.parseFloat(photo.getString("longitude"));
+
+                Map map = mm.findById(id);
+                Photo p = new Photo(url,longitude,latitude, map);
+                map.addPhoto(p);
+                pm.save(p);
+            }
+
+        }catch(Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.status(Response.Status.CREATED).build();
     }
 
 
