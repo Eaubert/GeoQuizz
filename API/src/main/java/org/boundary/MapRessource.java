@@ -2,6 +2,8 @@ package org.boundary;
 
 import org.boundary.exception.MapNotFound;
 import org.entity.Map;
+import org.entity.Partie;
+import org.entity.Photo;
 import org.provider.Secured;
 
 import javax.ejb.PostActivate;
@@ -13,13 +15,12 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Stateless
 @Path("maps")
@@ -68,27 +69,11 @@ public class MapRessource {
 
     @POST
     @Secured
-    public Response addMap(JsonObject json) {
-        String ville;
-        Float longitude, latitude, distance;
-        Map map;
-
-        try{
-            ville = json.getString("ville");
-            longitude = Float.parseFloat(json.getString("longitude"));
-            latitude = Float.parseFloat(json.getString("latitude"));
-            distance = Float.parseFloat(json.getString("distance"));
-
-            map = new Map(ville,longitude,latitude,distance);
-            mm.save(map);
-
-        }catch(Exception e){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-
-        return Response.ok(map.map2Json()).build();
+    public Response addMap(@Valid Map m, @Context UriInfo uriInfo) {
+        m.setId(UUID.randomUUID().toString());
+        URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();
+        return Response.created(uri).build();
     }
-
 
 
 }

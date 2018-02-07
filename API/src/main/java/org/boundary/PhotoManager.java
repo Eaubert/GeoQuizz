@@ -1,10 +1,12 @@
 package org.boundary;
 
+import org.entity.Map;
 import org.entity.Partie;
 import org.entity.Photo;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
+import javax.ws.rs.NotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +18,12 @@ public class PhotoManager {
     EntityManager em;
 
     public Photo findById(String id) {
-        return this.em.find(Photo.class, id);
+        try {
+            Photo p = this.em.find(Photo.class, id);
+            return p;
+        } catch (NotFoundException nfe) {
+            return null;
+        }
     }
 
     public List<Photo> findAll() {
@@ -34,7 +41,8 @@ public class PhotoManager {
         try {
             Photo ref = this.em.getReference(Photo.class, id);
             this.em.remove(ref);
-        } catch (EntityNotFoundException e) { }
+        } catch (EntityNotFoundException e) {
+        }
     }
 
 }

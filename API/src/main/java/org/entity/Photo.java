@@ -33,7 +33,7 @@ public class Photo implements Serializable{
     private Map map = new Map();
 
     @ManyToMany
-    private Set<Partie> parties = new HashSet<Partie>();
+    private Set<Partie> parties = new HashSet<>();
 
     public Photo() {
     }
