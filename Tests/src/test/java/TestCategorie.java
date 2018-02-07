@@ -39,7 +39,7 @@ public class TestCategorie {
         assertThat(partieResponse.getStatus(), is(201));
     }
 
-    @Test
+    /*@Test
     public void testGet() {
         JsonObject jsonRecupere = this.client
                 .target(location)
@@ -59,7 +59,7 @@ public class TestCategorie {
                 .request()
                 .delete();
         assertThat(deleteResponse.getStatus(), is(204));
-    }
+    }*/
 
    
 }
