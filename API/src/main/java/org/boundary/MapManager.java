@@ -19,6 +19,10 @@ public class MapManager {
         return this.em.find(Map.class, id);
     }
 
+    public Map findByName(String ville) {
+        return this.em.find(Map.class, ville);
+    }
+
     public List<Map> findAll() {
         Query q = this.em.createNamedQuery("Map.findAll", Map.class);
         q.setHint("javax.persistance.cache.storeMode", CacheStoreMode.REFRESH);

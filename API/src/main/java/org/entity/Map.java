@@ -103,6 +103,10 @@ public class Map implements Serializable{
         this.parties = listPartie;
     }
 
+    public void addPhoto(Photo p){
+        this.photos.add(p);
+    }
+
     public JsonObject buildJson() {
         JsonObject self = Json.createObjectBuilder()
                 .add("href", "/maps/" + this.getId())

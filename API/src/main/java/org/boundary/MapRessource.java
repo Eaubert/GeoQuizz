@@ -4,6 +4,7 @@ import org.boundary.exception.MapNotFound;
 import org.entity.Map;
 import org.provider.Secured;
 
+import javax.ejb.PostActivate;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -64,6 +65,7 @@ public class MapRessource {
                 .map(m -> Response.ok((m.photos2Json())).build())
                 .orElseThrow(() -> new MapNotFound("Ressource non disponible" + uriInfo.getPath()));
     }
+
 
 
 }

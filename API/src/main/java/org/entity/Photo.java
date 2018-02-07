@@ -25,9 +25,9 @@ public class Photo implements Serializable{
     @NotNull
     private String url;
     @NotNull
-    private String longitude;
+    private Float longitude;
     @NotNull
-    private String latitude;
+    private Float latitude;
 
     @ManyToOne
     private Map map = new Map();
@@ -38,8 +38,7 @@ public class Photo implements Serializable{
     public Photo() {
     }
 
-    public Photo(String id, String url, String longitude, String latitude, Map map) {
-        this.id = id;
+    public Photo(String url, Float longitude, Float latitude, Map map) {
         this.url = url;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -62,19 +61,19 @@ public class Photo implements Serializable{
         this.url = url;
     }
 
-    public String getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 
