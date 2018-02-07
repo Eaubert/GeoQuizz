@@ -2,7 +2,9 @@ package org.entity;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,8 +14,8 @@ import java.io.Serializable;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@NamedQuery(name="Utilisateur.findAll",query="SELECT u FROM Utilisateur u")
-public class Utilisateur implements Serializable{
+@NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
+public class Utilisateur implements Serializable {
 
     @Id
     private String email;
@@ -68,27 +70,17 @@ public class Utilisateur implements Serializable{
         this.score = score;
     }
 
-    public JsonObject buildJson() {
-        JsonObject self = Json.createObjectBuilder()
-                .add("href", "/users/" + this.email)
-                .build();
-
-        JsonObject details = Json.createObjectBuilder()
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
                 .add("pseudo", this.pseudo)
                 .add("mail", this.email)
                 .add("score", this.score)
                 .build();
-
-        return Json.createObjectBuilder()
-                .add("utilisateur", details)
-                .build();
     }
 
-    public JsonObject utilisateur2Json() {
+    public JsonObject getLinks() {
         return Json.createObjectBuilder()
-                .add("type", "resource")
-                .add("utilisateur", this.buildJson())
+                .add("href", "/users/" + this.email)
                 .build();
     }
-
 }

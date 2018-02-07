@@ -44,7 +44,7 @@ public class MapManager {
         try {
             Map ref = this.em.getReference(Map.class, id);
             this.em.remove(ref);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException enfe) {
         }
     }
 

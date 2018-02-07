@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>File upload</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Upload d'un fichier</h1>
+        <form action="api/file/upload" method='POST' enctype="multipart/form-data">
+            
+            <p>Choisir le fichier: <input name='file' type='file' />
+                <input type='submit' value='Upload'/>
+        </form>
+    </body>
+</html>

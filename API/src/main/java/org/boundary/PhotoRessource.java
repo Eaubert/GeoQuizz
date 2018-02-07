@@ -1,9 +1,7 @@
 package org.boundary;
 
-import org.boundary.exception.PhotoNotFound;
 import org.entity.Map;
 import org.entity.Photo;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.provider.Secured;
 
 import javax.ejb.Stateless;
@@ -18,11 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.lang.reflect.Array;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Stateless
@@ -56,7 +50,11 @@ public class PhotoRessource {
         if (p == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(p.photo2Json()).build();
+        return Response.ok(Json.createObjectBuilder()
+                .add("type", "resource")
+                .add("photo", p.toJson())
+                .add("links", p.getLinks())
+                .build()).build();
     }
 
     @GET
@@ -66,7 +64,7 @@ public class PhotoRessource {
         if (p == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(p.getMap().buildJson()).build();
+        return Response.ok(p.getMap().toJson()).build();
     }
 
 
@@ -78,7 +76,6 @@ public class PhotoRessource {
         Map m = mm.findById(idMap);
         if (m == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
-
         }
         p.setMap(m);
         p.setId(UUID.randomUUID().toString());

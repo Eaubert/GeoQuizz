@@ -1,28 +1,19 @@
 package org.boundary;
 
-import org.boundary.exception.PartieNotFound;
 import org.entity.Map;
 import org.entity.Partie;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.provider.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Stateless
 @Path("parties")
@@ -42,26 +33,26 @@ public class PartieRessource {
     @GET
     @Path("{id}")
     public Response getPartieById(@PathParam("id") String id,
-                                   @DefaultValue("") @QueryParam("token") String tokenParam,
-                                   @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
+                                  @DefaultValue("") @QueryParam("token") String tokenParam,
+                                  @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
 
         // on cherche la partie
         Partie partie = this.pm.findById(id);
-        if(partie == null){
+        if (partie == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         // a-t-on un token ?
-        if(tokenParam.isEmpty() && tokenHeader.isEmpty()) {
+        if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
         String token = (tokenParam.isEmpty()) ? tokenHeader : tokenParam;
         Boolean isTokenValide = partie.getToken().equals(token);
 
-        if(!isTokenValide) {
+        if (!isTokenValide) {
             return Response.status(Response.Status.FORBIDDEN).build();
         } else {
-            return Response.ok(partie.partie2Json()).build();
+            return Response.ok(partie.oneToJson()).build();
         }
 
     }
@@ -69,82 +60,103 @@ public class PartieRessource {
     @GET
     @Path("{id}/photos")
     public Response getPartiePhotos(@PathParam("id") String id,
-                                  @DefaultValue("") @QueryParam("token") String tokenParam,
-                                  @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
-
-        // on cherche la partie
-        Partie partie = this.pm.findById(id);
-        if(partie == null){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        // a-t-on un token ?
-        if(tokenParam.isEmpty() && tokenHeader.isEmpty()) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        }
-        String token = (tokenParam.isEmpty()) ? tokenHeader : tokenParam;
-        Boolean isTokenValide = partie.getToken().equals(token);
-
-        if(!isTokenValide) {
-            return Response.status(Response.Status.FORBIDDEN).build();
-        } else {
-            return Response.ok(partie.partiePhotos2Json()).build();
-        }
-
-    }
-
-    @GET
-    @Path("{id}/map")
-    public Response getPartieMap(@PathParam("id") String id,
                                     @DefaultValue("") @QueryParam("token") String tokenParam,
                                     @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
 
         // on cherche la partie
         Partie partie = this.pm.findById(id);
-        if(partie == null){
+        if (partie == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         // a-t-on un token ?
-        if(tokenParam.isEmpty() && tokenHeader.isEmpty()) {
+        if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
         String token = (tokenParam.isEmpty()) ? tokenHeader : tokenParam;
         Boolean isTokenValide = partie.getToken().equals(token);
 
-        if(!isTokenValide) {
+        if (!isTokenValide) {
             return Response.status(Response.Status.FORBIDDEN).build();
         } else {
-            Map m = partie.getMap();
+            JsonArrayBuilder photos = Json.createArrayBuilder();
+            partie.getPhotos().forEach((p) -> {
+                JsonObject photo = p.buildJson();
+                photos.add(photo);
+            });
             return Response.ok(Json.createObjectBuilder()
-                    .add("map", m.toJson())
-                    .add("links", m.getLinks())
+                    .add("type", "collection")
+                    .add("photos", photos)
                     .build()).build();
+        }
+    }
+
+    @GET
+    @Path("{id}/map")
+    public Response getPartieMap(@PathParam("id") String id,
+                                 @DefaultValue("") @QueryParam("token") String tokenParam,
+                                 @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
+
+        // on cherche la partie
+        Partie partie = this.pm.findById(id);
+        if (partie == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        // a-t-on un token ?
+        if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+        String token = (tokenParam.isEmpty()) ? tokenHeader : tokenParam;
+        Boolean isTokenValide = partie.getToken().equals(token);
+
+        if (!isTokenValide) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } else {
+            return Response.ok(partie.getMap().buildJson()).build();
         }
     }
 
     @POST
     public Response addPartie(JsonObject json) {
 
-        String joueur,id_map;
+        String joueur, id_map;
         Integer nbPhotos;
         Map map;
 
-        try{
+        try {
             nbPhotos = Integer.parseInt(json.getString("nbPhotos"));
             joueur = json.getString("joueur");
             id_map = json.getString("idMap");
 
             map = this.mm.findById(id_map);
-        }catch(Exception e){
+        } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        Partie newPartie = this.pm.save(new Partie(nbPhotos,joueur,map));
+        Partie newPartie = this.pm.save(new Partie(nbPhotos, joueur, map));
         URI uri = uriInfo.getAbsolutePathBuilder().path(newPartie.getId()).build();
-        return Response.ok(newPartie.partie2Json()).build();
+        return Response.ok(newPartie.oneToJson()).build();
     }
 
+    @PUT
+    @Path("{id}")
+    public Response addScore(@PathParam("id") String id, @DefaultValue("") @QueryParam("score") String score) {
+
+        try {
+            if (!score.isEmpty()) {
+                Partie partie = pm.findById(id);
+                partie.setScore(Integer.parseInt(score));
+                pm.update(partie);
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return Response.status(Response.Status.OK).build();
+    }
 
 
 }

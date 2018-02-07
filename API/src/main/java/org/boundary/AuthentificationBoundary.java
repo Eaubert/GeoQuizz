@@ -52,9 +52,8 @@ AuthentificationBoundary {
     }
 
     private void authentifie(String email, String motDePasse) throws Exception {
-        System.out.println("hash : "+PasswordManagement.digestPassword(motDePasse));
         Utilisateur utilisateur = um.findByEmail(email);
-        // On authentifie l'utilisateur en utilisant la BD, LDAP,...
+
         // On lève une exception si les crédentials sont invalides
         if (email.equals(utilisateur.getEmail()) && BCrypt.checkpw(motDePasse, utilisateur.getMdp())) {
         } else {

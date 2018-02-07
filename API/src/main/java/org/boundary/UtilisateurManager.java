@@ -1,14 +1,12 @@
 package org.boundary;
 
 import org.entity.Map;
-import org.entity.Photo;
 import org.entity.Utilisateur;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
-import java.util.HashSet;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
-import java.util.UUID;
 
 @Stateless
 public class UtilisateurManager {
@@ -17,7 +15,11 @@ public class UtilisateurManager {
     EntityManager em;
 
     public Utilisateur findByEmail(String email) {
-        return this.em.find(Utilisateur.class, email);
+        try {
+            return this.em.find(Utilisateur.class, email);
+        } catch (NotFoundException nfe) {
+            return null;
+        }
     }
 
     public List<Utilisateur> findAll() {
@@ -34,7 +36,8 @@ public class UtilisateurManager {
         try {
             Utilisateur ref = this.em.getReference(Utilisateur.class, email);
             this.em.remove(ref);
-        } catch (EntityNotFoundException e) { }
+        } catch (EntityNotFoundException e) {
+        }
     }
 
 }

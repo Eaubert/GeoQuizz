@@ -5,8 +5,6 @@ import org.entity.Partie;
 import org.entity.Photo;
 
 import javax.ejb.Stateless;
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -53,6 +51,10 @@ public class PartieManager {
         });
         return this.em.merge(p);
 
+    }
+
+    public Partie update(Partie p) {
+        return this.em.merge(p);
     }
 
     public void delete(String id) {

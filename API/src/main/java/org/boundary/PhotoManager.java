@@ -1,13 +1,10 @@
 package org.boundary;
 
-import org.entity.Map;
-import org.entity.Partie;
 import org.entity.Photo;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.ws.rs.NotFoundException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 

@@ -1,7 +1,6 @@
 package org.entity;
 
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +9,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -98,37 +96,30 @@ public class Photo implements Serializable{
     }
 
     public JsonObject buildJson() {
-        JsonObject self = Json.createObjectBuilder()
-                .add("href", "/photos/" + this.id)
+        return Json.createObjectBuilder()
+                .add("photo", this.toJson())
+                .add("links", this.getLinks())
                 .build();
+    }
 
-        JsonObject linksMap = Json.createObjectBuilder()
-                .add("href", "/photos/" + this.id + "/map")
-                .build();
-
-        JsonObject links = Json.createObjectBuilder()
-                .add("self", self)
-                .add("map", linksMap)
-                .build();
-
-        JsonObject details = Json.createObjectBuilder()
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
                 .add("id", this.id)
                 .add("url", this.url)
                 .add("longitude", this.longitude)
                 .add("latitude", this.latitude)
                 .add("idMap", this.map.getId())
                 .build();
-
-        return Json.createObjectBuilder()
-                .add("photo", details)
-                .add("links", links)
-                .build();
     }
 
-    public JsonObject photo2Json() {
+    public JsonObject getLinks() {
         return Json.createObjectBuilder()
-                .add("type", "resource")
-                .add("photo", this.buildJson())
+                .add("self", Json.createObjectBuilder()
+                        .add("href", "/photos/" + this.getId())
+                        .build())
+                .add("map", Json.createObjectBuilder()
+                        .add("href", "/photos/" + this.getId() + "/map")
+                        .build())
                 .build();
     }
 }

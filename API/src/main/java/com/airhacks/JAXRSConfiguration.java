@@ -1,5 +1,7 @@
 package com.airhacks;
 
+import org.boundary.UploadService;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -17,7 +19,7 @@ public class JAXRSConfiguration extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<>();
-
+        classes.add(UploadService.class);
         classes.add(org.cors.CORSRequestFilter.class);
         classes.add(org.cors.CORSResponseFilter.class);
         classes.add(org.boundary.AuthentificationBoundary.class);

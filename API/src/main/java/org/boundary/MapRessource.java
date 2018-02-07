@@ -1,12 +1,8 @@
 package org.boundary;
 
-import org.boundary.exception.MapNotFound;
 import org.entity.Map;
-import org.entity.Partie;
-import org.entity.Photo;
 import org.provider.Secured;
 
-import javax.ejb.PostActivate;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -15,11 +11,10 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.net.URI;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.UUID;
 
 @Stateless
@@ -60,10 +55,7 @@ public class MapRessource {
     private JsonArray getMapList() {
         JsonArrayBuilder jab = Json.createArrayBuilder();
         this.mm.findAll().forEach((m) -> {
-            jab.add(Json.createObjectBuilder()
-                    .add("map", m.toJson())
-                    .add("links", m.getLinks())
-                    .build());
+            jab.add(m.buildJson());
         });
         return jab.build();
     }
@@ -90,8 +82,13 @@ public class MapRessource {
     @Secured
     public Response addMap(@Valid Map m, @Context UriInfo uriInfo) {
         m.setId(UUID.randomUUID().toString());
-        URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();
-        return Response.created(uri).build();
+        this.mm.save(m);
+        /*URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();
+        return Response.created(uri).build();*/
+        return Response.ok(Json.createObjectBuilder()
+                .add("map", m.toJson())
+                .add("links", m.getLinks())
+                .build()).build();
     }
 
 
