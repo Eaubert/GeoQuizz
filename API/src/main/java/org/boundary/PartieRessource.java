@@ -115,9 +115,13 @@ public class PartieRessource {
         if(!isTokenValide) {
             return Response.status(Response.Status.FORBIDDEN).build();
         } else {
-            return Response.ok(partie.getMap().map2Json()).build();
+            Map m = partie.getMap();
+            return Response.ok(Json.createObjectBuilder()
+                    .add("map", m.toJson())
+                    .add("links", m.getLinks())
+                    .build()).build();
         }
-
+        ;
     }
 
     @POST

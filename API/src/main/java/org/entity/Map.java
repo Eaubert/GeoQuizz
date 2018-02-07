@@ -107,6 +107,13 @@ public class Map implements Serializable {
         this.photos.add(p);
     }
 
+    public JsonObject buildJson() {
+        return Json.createObjectBuilder()
+                .add("map", this.toJson())
+                .add("links", this.getLinks())
+                .build();
+    }
+
     public JsonObject toJson() {
         return Json.createObjectBuilder()
                 .add("id", this.id)
