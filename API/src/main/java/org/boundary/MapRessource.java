@@ -69,13 +69,24 @@ public class MapRessource {
     @POST
     @Secured
     public Response addMap(JsonObject json) {
+        String ville;
+        Float longitude, latitude, distance;
+        Map map;
 
         try{
+            ville = json.getString("ville");
+            longitude = Float.parseFloat(json.getString("longitude"));
+            latitude = Float.parseFloat(json.getString("latitude"));
+            distance = Float.parseFloat(json.getString("distance"));
+
+            map = new Map(ville,longitude,latitude,distance);
+            mm.save(map);
 
         }catch(Exception e){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return null;
+
+        return Response.ok(map.map2Json()).build();
     }
 
 
