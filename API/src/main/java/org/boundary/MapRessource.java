@@ -46,15 +46,24 @@ public class MapRessource {
     @GET
     @Path("{id}")
     public Response getMapById(@PathParam("id") String id, @Context UriInfo uriInfo) throws Throwable {
-        return Optional.ofNullable(this.mm.findById(id))
-                .map(m -> Response.ok((m.map2Json())).build())
-                .orElseThrow(() -> new MapNotFound("Ressource non disponible" + uriInfo.getPath()));
+        Map m = this.mm.findById(id);
+        if (m == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(Json.createObjectBuilder()
+                .add("type", "resource")
+                .add("map", m.toJson())
+                .add("links", m.getLinks())
+                .build()).build();
     }
 
     private JsonArray getMapList() {
         JsonArrayBuilder jab = Json.createArrayBuilder();
         this.mm.findAll().forEach((m) -> {
-            jab.add(m.buildJson());
+            jab.add(Json.createObjectBuilder()
+                    .add("map", m.toJson())
+                    .add("links", m.getLinks())
+                    .build());
         });
         return jab.build();
     }
@@ -62,9 +71,19 @@ public class MapRessource {
     @GET
     @Path("{id}/photos")
     public Response getMapPhotos(@PathParam("id") String id, @Context UriInfo uriInfo) throws Throwable {
-        return Optional.ofNullable(this.mm.findById(id))
-                .map(m -> Response.ok((m.photos2Json())).build())
-                .orElseThrow(() -> new MapNotFound("Ressource non disponible" + uriInfo.getPath()));
+        Map m = this.mm.findById(id);
+        if (m == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        JsonArrayBuilder photos = Json.createArrayBuilder();
+        m.getListPhotos().forEach((p) -> {
+            JsonObject photo = p.buildJson();
+            photos.add(photo);
+        });
+        return Response.ok(Json.createObjectBuilder()
+                .add("type", "collection")
+                .add("photos", photos)
+                .build()).build();
     }
 
     @POST

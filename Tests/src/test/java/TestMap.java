@@ -50,7 +50,7 @@ public class TestMap {
                 .request(MediaType.APPLICATION_JSON)
                 .get(JsonObject.class);
 
-        assertTrue(jsonRecupere.getJsonObject("partie").containsKey("distance"));
+        assertTrue(jsonRdecupere.getJsonObject("partie").containsKey("distance"));
         assertTrue(jsonRecupere.getJsonObject("partie").getString("distance").contains("100"));
         assertTrue(jsonRecupere.getJsonObject("partie").containsKey("latitude"));
         assertTrue(jsonRecupere.getJsonObject("partie").getString("latitude").contains("6.656"));
