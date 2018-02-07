@@ -34,10 +34,10 @@ public class MapRessource {
     UriInfo uriInfo;
 
     @GET
-    public Response getMap() {
+    public Response getMaps() {
         JsonObject json = Json.createObjectBuilder()
                 .add("type", "collection")
-                .add("map", this.getMapList())
+                .add("maps", this.getMapList())
                 .build();
         return Response.ok(json).build();
     }
