@@ -72,12 +72,39 @@ public class PhotoRessource {
 
     @POST
     @Secured
+<<<<<<< HEAD
     public Response addPhoto(@Valid Photo p,
                              @DefaultValue("") @QueryParam("idMap") String idMap,
                              @Context UriInfo uriInfo) {
         Map m = mm.findById(idMap);
         if (m == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
+=======
+    public Response addPhotos(JsonObject json) {
+        String idMap,url;
+        Float latitude,longitude;
+        Integer nbPhotos;
+
+        try{
+            nbPhotos = Integer.parseInt(json.getString("nbPhotos"));
+
+            JsonArray photos = json.getJsonArray("photos");
+            for(int i=0;i<nbPhotos; i++){
+                JsonObject photo = photos.getJsonObject(i);
+                url = photo.getString("url");
+                idMap = photo.getString("idMap");
+                latitude = Float.parseFloat(photo.getString("latitude"));
+                longitude = Float.parseFloat(photo.getString("longitude"));
+
+                Map map = mm.findById(idMap);
+                Photo p = new Photo(url,longitude,latitude, map);
+                map.addPhoto(p);
+                pm.save(p);
+            }
+
+        }catch(Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+>>>>>>> 3c18e9744fe3f27aaba712263a0df378ea6fb7ca
         }
         p.setMap(m);
         p.setId(UUID.randomUUID().toString());
@@ -92,6 +119,20 @@ public class PhotoRessource {
             jab.add(p.buildJson());
         });
         return jab.build();
+    }
+
+    @DELETE
+    @Secured
+    @Path("{id}")
+    @Produces("application/json")
+    public Response methodeSecurisee(@PathParam("id") Long id) {
+        // La méthode est annotée avec @Secured
+        // Le filtre est exécuté
+        // On doit avoir un token valide
+        String str = "Sécurisé";
+        JsonObject jsonResult = Json.createObjectBuilder().
+                add("status", str).build();
+        return Response.ok().entity(jsonResult).build();
     }
 
 }
