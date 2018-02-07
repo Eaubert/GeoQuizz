@@ -14,8 +14,8 @@ import java.util.*;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@NamedQuery(name="Map.findAll",query="SELECT m FROM Map m")
-public class Map implements Serializable{
+@NamedQuery(name = "Map.findAll", query = "SELECT m FROM Map m")
+public class Map implements Serializable {
 
     @Id
     private String id;
@@ -31,10 +31,10 @@ public class Map implements Serializable{
 
     private Float distance;
 
-    @OneToMany(mappedBy="map")
+    @OneToMany(mappedBy = "map")
     private Set<Photo> photos = new HashSet<Photo>();
 
-    @OneToMany(mappedBy="map")
+    @OneToMany(mappedBy = "map")
     private Set<Partie> parties = new HashSet<Partie>();
 
     public Map() {
@@ -103,25 +103,19 @@ public class Map implements Serializable{
         this.parties = listPartie;
     }
 
-    public void addPhoto(Photo p){
+    public void addPhoto(Photo p) {
         this.photos.add(p);
     }
 
     public JsonObject buildJson() {
-        JsonObject self = Json.createObjectBuilder()
-                .add("href", "/maps/" + this.getId())
+        return Json.createObjectBuilder()
+                .add("map", this.toJson())
+                .add("links", this.getLinks())
                 .build();
+    }
 
-        JsonObject linksPhotos = Json.createObjectBuilder()
-                .add("href", "/maps/" + this.getId() + "/photos")
-                .build();
-
-        JsonObject links = Json.createObjectBuilder()
-                .add("self", self)
-                .add("photos", linksPhotos)
-                .build();
-
-        JsonObject details = Json.createObjectBuilder()
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
                 .add("id", this.id)
                 .add("ville", this.ville)
                 .add("longitude", this.longitude)
@@ -129,31 +123,16 @@ public class Map implements Serializable{
                 .add("distance", this.distance)
                 .add("nbPhotos", this.photos.size())
                 .build();
-
-        return Json.createObjectBuilder()
-                .add("map", details)
-                .add("links", links)
-                .build();
     }
 
-    public JsonObject map2Json() {
+    public JsonObject getLinks() {
         return Json.createObjectBuilder()
-                .add("type", "resource")
-                .add("map", this.buildJson())
-                .build();
-    }
-
-    public JsonObject photos2Json(){
-
-        JsonArrayBuilder photos = Json.createArrayBuilder();
-        this.photos.forEach((p) -> {
-            JsonObject photo = p.buildJson();
-            photos.add(photo);
-        });
-
-        return Json.createObjectBuilder()
-                .add("type", "collection")
-                .add("photos", photos)
+                .add("self", Json.createObjectBuilder()
+                        .add("href", "/maps/" + this.getId())
+                        .build())
+                .add("photos", Json.createObjectBuilder()
+                        .add("href", "/maps/" + this.getId() + "/photos")
+                        .build())
                 .build();
     }
 }
