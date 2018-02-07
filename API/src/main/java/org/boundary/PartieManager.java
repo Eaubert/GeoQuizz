@@ -51,6 +51,10 @@ public class PartieManager {
         return this.em.merge(p);
     }
 
+    public Partie update(Partie p) {
+        return this.em.merge(p);
+    }
+
     public void delete(String id) {
         try {
             Partie ref = this.em.getReference(Partie.class, id);

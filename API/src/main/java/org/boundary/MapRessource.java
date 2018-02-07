@@ -71,8 +71,10 @@ public class MapRessource {
     @Secured
     public Response addMap(@Valid Map m, @Context UriInfo uriInfo) {
         m.setId(UUID.randomUUID().toString());
-        URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();
-        return Response.created(uri).build();
+        this.mm.save(m);
+        /*URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();
+        return Response.created(uri).build();*/
+        return Response.ok(m.buildJson()).build();
     }
 
 

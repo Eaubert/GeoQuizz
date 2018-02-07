@@ -142,6 +142,25 @@ public class PartieRessource {
         return Response.ok(newPartie.partie2Json()).build();
     }
 
+    @PUT
+    @Path("{id}")
+    public Response addScore(@PathParam("id") String id, @DefaultValue("") @QueryParam("score") String score) {
+
+
+        try{
+            if(!score.isEmpty()){
+                Partie partie = pm.findById(id);
+                partie.setScore(Integer.parseInt(score));
+                pm.update(partie);
+            }else{
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        }catch(Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return Response.status(Response.Status.OK).build();
+    }
 
 
 }
