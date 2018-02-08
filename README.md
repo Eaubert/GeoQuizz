@@ -27,16 +27,17 @@ npm install
 npm run dev
 ```
 ```shell
-cd ../jeu
+cd GeoQuizz/jeu
 npm install
 npm run dev
 ```
 ```shell
-cd ../API
+cd GeoQuizz/API
 mvn clean install
 cp target/GeoQuizz.war [your deployement directory]
 ```
 Charger data.sql dans la base de données.
+
 ## Règles
 
 ### But du jeu :
