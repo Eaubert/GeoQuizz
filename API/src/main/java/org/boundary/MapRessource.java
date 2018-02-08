@@ -81,6 +81,15 @@ public class MapRessource {
     @POST
     @Secured
     public Response addMap(@Valid Map m, @Context UriInfo uriInfo) {
+        Map verifMap = mm.findByName(m.getVille());
+
+        if (verifMap != null) {
+            return Response.ok(Json.createObjectBuilder()
+                    .add("map", verifMap.toJson())
+                    .add("links", verifMap.getLinks())
+                    .build()).build();
+        }
+
         m.setId(UUID.randomUUID().toString());
         this.mm.save(m);
         /*URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();

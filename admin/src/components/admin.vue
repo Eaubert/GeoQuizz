@@ -35,7 +35,7 @@
         </form>
       </div>
       <div class="col-sm-6">
-        <series :series="series" class ="series">
+        <series :series="series">
 
         </series>
     </div>

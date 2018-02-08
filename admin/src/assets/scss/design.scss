@@ -46,3 +46,21 @@ a {
 body{
   font-family: 'Lobster';
 }
+
+.series{
+    height : 200px;
+    overflow-y: scroll;
+
+    :hover{
+      cursor : pointer;
+    }
+
+    h4{
+      text-align: center;
+    }
+
+    li:hover{
+      background-color : gray;
+      color : white;
+    }
+}
