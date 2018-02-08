@@ -81,6 +81,7 @@ public class MapRessource {
     @POST
     @Secured
     public Response addMap(@Valid Map m, @Context UriInfo uriInfo) {
+        m.setVille(m.getVille().substring(0, 1).toUpperCase() + m.getVille().substring(1));
         m.setId(UUID.randomUUID().toString());
         this.mm.save(m);
         /*URI uri = uriInfo.getAbsolutePathBuilder().path("/" + this.mm.save(m).getId()).build();
@@ -90,6 +91,4 @@ public class MapRessource {
                 .add("links", m.getLinks())
                 .build()).build();
     }
-
-
 }

@@ -36,14 +36,10 @@ public class PartieRessource {
                                   @DefaultValue("") @QueryParam("token") String tokenParam,
                                   @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
 
-        // on cherche la partie
         Partie partie = this.pm.findById(id);
         if (partie == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        // a-t-on un token ?
-        if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
+        } else if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
         String token = (tokenParam.isEmpty()) ? tokenHeader : tokenParam;
@@ -54,23 +50,17 @@ public class PartieRessource {
         } else {
             return Response.ok(partie.oneToJson()).build();
         }
-
     }
 
     @GET
     @Path("{id}/photos")
     public Response getPartiePhotos(@PathParam("id") String id,
                                     @DefaultValue("") @QueryParam("token") String tokenParam,
-                                    @DefaultValue("") @HeaderParam("x-lbs-token") String tokenHeader) {
-
-        // on cherche la partie
+                                    @DefaultValue("") @HeaderParam("token") String tokenHeader) {
         Partie partie = this.pm.findById(id);
         if (partie == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        // a-t-on un token ?
-        if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
+        } else if (tokenParam.isEmpty() && tokenHeader.isEmpty()) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
         String token = (tokenParam.isEmpty()) ? tokenHeader : tokenParam;
