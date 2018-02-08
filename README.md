@@ -1,5 +1,9 @@
 # GeoQuizz
 
+## Prérecquis
+
+NodeJs
+
 ## Membres:
   - Cuny Louis
   - Sipp Hugo
@@ -14,9 +18,7 @@ https://trello.com/b/nQdTXqca/atelier-2
 
 git clone git@github.com:Eaubert/GeoQuizz.git
 
-cd GeoQuizz
-
-cd admin
+cd GeoQuizz/admin
 
 npm install
 
