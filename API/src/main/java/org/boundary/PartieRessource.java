@@ -142,6 +142,7 @@ public class PartieRessource {
         try {
             Partie partie = pm.findById(id);
             partie.setScore(Integer.parseInt(json.getString("score")));
+            partie.setDifficulte(json.getString("difficulte"));
             pm.update(partie);
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
