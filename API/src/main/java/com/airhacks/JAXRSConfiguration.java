@@ -23,6 +23,7 @@ public class JAXRSConfiguration extends Application {
         classes.add(org.cors.CORSRequestFilter.class);
         classes.add(org.cors.CORSResponseFilter.class);
         classes.add(org.boundary.AuthentificationBoundary.class);
+        classes.add(org.provider.AuthentificationFiltre.class);
         classes.add(org.boundary.UtilisateurRessource.class);
         classes.add(org.boundary.MapRessource.class);
         classes.add(org.boundary.PhotoRessource.class);

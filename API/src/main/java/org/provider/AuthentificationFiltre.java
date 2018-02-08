@@ -28,7 +28,7 @@ public class AuthentificationFiltre implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
         // Récupère le header HTTP à partir de la requête
-
+System.out.println("azertyuiop");
         String authHeader
                 = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
