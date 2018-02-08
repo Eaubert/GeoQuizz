@@ -73,7 +73,10 @@
         })
 
         confApi.post('/photos/?idMap=' + this.$route.params.idMap, photo, {headers: {Authorization: localStorage.getItem("token")}}).then((response) => {
-          router.push('/photos/' + this.$route.params.idMap)
+          /*router.push('/photos/' + this.$route.params.idMap)*/
+          this.latitude = '';
+          this.longitude = '';
+          this.url = '';
         }).catch((error) => {
           console.log(error)
           localStorage.removeItem("token")

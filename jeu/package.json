@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "bootstrap-sass": "^3.3.7",
+    "geodist": "^0.2.1",
     "jquery": "^2.2.4",
     "rand-token": "^0.4.0",
     "vue": "^2.5.2",
