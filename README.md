@@ -1,5 +1,10 @@
 # GeoQuizz
 
+## Prérecquis
+
+NodeJs
+Docker
+
 ## Membres:
   - Cuny Louis
   - Sipp Hugo
