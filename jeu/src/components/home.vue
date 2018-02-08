@@ -1,6 +1,6 @@
 <template>
 <div>
-  
+
   <h1 class='homeh1'>GEOQUIZZ</h1>
   <form @submit="start">
   <div class="form-group">
@@ -42,7 +42,8 @@ name: 'app',
       partie:[],
       selected:'',
       name:'',
-      diff:''
+      diff:'',
+      l:0,
     }
   },
   methods:{
