@@ -135,6 +135,7 @@ public class Partie implements Serializable {
         return Json.createObjectBuilder()
                 .add("id", this.id)
                 .add("token", this.token)
+                .add("joueur", this.joueur)
                 .add("statut", this.statut)
                 .add("score", this.score)
                 .add("nbPhotos", this.nbPhotos)

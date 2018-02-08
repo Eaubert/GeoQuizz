@@ -3,9 +3,7 @@ package org.boundary;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -16,13 +14,24 @@ import java.util.Map;
 @Path("file")
 public class UploadService {
 
+    @GET
+    @Path("download/{filename}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadFile(
+            @PathParam("filename") String filename) {
+        File file = new File("/opt/jboss/wildfly/standalone/tmp/" + filename);
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition", "attachment;filename=" + filename);
+        return response.build();
+    }
+
     @POST
     @Path("upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFichier(MultipartFormDataInput input) {
 
         Map<String, List<InputPart>> formulaire = input.getFormDataMap();
-        List<InputPart> inputParts = formulaire.get("file");
+        List<InputPart> inputParts = formulaire.get("img");
 
         for (InputPart ip : inputParts) {
             MultivaluedMap<String, String> headers = ip.getHeaders();
@@ -36,7 +45,7 @@ public class UploadService {
                 ioe.printStackTrace();
             }
         }
-        String output = "Fichier disponible";
+        String output = "{ Fichier disponible } ";
         return Response.status(200).entity(output).build();
     }
 
@@ -76,7 +85,7 @@ public class UploadService {
             }
         }
 
-        return "inconnu";
+        return "{ inconnu }";
     }
 
 
