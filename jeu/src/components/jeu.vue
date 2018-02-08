@@ -150,17 +150,16 @@ name: 'app',
             else if(geodist(curseur, img, {exact: true, unit: 'meters'})>=c3){
               res+="Vous êtes trop loin";
             }
-
-            alert(res);
             jeu.lat=img.lat;
             jeu.lng=img.lon;
+            alert(res);
             this.removeEventListener("click");
             jeu.temps=new Date();
           });
     }
     else{
         alert('partie finie');
-        router.push('/sauvegarde/'+jeu.score+'/'+this.$route.params.id);
+        router.push('/sauvegarde/'+this.$route.params.map+'/'+jeu.score+'/'+this.$route.params.id);
       }
     }
   }
