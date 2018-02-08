@@ -78,10 +78,12 @@ export default {
         	"distance": this.distance.toString(),
       }
 
-      confApi.post('/maps', map ).then((response)=> {
+      confApi.post('/maps', map, { headers: { Authorization:  localStorage.getItem("token") } }).then((response)=> {
         router.push('/photos/'+response.data.map.id)
       }).catch((error)=> {
-          alert("Une erreur survenue dans la requete");
+          localStorage.removeItem("token")
+          alert("Veuillez vous reconnecter")
+          router.push('/')
       })
     }
   }

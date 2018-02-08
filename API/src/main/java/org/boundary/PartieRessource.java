@@ -131,16 +131,12 @@ public class PartieRessource {
 
     @PUT
     @Path("{id}")
-    public Response addScore(@PathParam("id") String id, @DefaultValue("") @QueryParam("score") String score) {
+    public Response addScore(@PathParam("id") String id, JsonObject json) {
 
         try {
-            if (!score.isEmpty()) {
-                Partie partie = pm.findById(id);
-                partie.setScore(Integer.parseInt(score));
-                pm.update(partie);
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+            Partie partie = pm.findById(id);
+            partie.setScore(Integer.parseInt(json.getString("score")));
+            pm.update(partie);
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

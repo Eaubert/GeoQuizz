@@ -67,7 +67,7 @@ AuthentificationBoundary {
                 .setSubject(login)
                 .setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
-                .setExpiration(toDate(LocalDateTime.now().plusMinutes(10L)))
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(30L)))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
         System.out.println(">>>> token/key : " + jwtToken + " -- " + key);

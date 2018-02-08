@@ -71,7 +71,7 @@ export default {
 
       confApi.post('/users', user).then((response)=> {
           confApi.post('/authentification', user).then((response)=> {
-              sessionStorage.setItem("isConnected", "Connect")
+            localStorage.setItem("token", response.headers.authorization)
             router.push('/admin')
           })
       }).catch((error)=> {
@@ -87,7 +87,7 @@ export default {
       }
 
       confApi.post('/authentification', user ).then((response)=> {
-          sessionStorage.setItem("isConnected", "Connect")
+          localStorage.setItem("token", response.headers.authorization)
           router.push('/admin')
       }).catch((error)=> {
           alert("Mauvais E-mail ou Mot de passe");
