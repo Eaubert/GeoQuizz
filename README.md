@@ -11,9 +11,13 @@ Trello : https://trello.com/b/nQdTXqca/atelier-2
 Installation:
 
 git clone git@github.com:Eaubert/GeoQuizz.git
+
 cd GeoQuizz
+
 cd admin
+
 npm install
+
 npm run dev
 
 Route:
