@@ -3,7 +3,6 @@
 ## Prérecquis
 
 NodeJs
-Docker
 
 ## Membres:
   - Cuny Louis
