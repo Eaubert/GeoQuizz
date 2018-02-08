@@ -2,9 +2,7 @@
 
 ## Prérecquis
 
-Maven
-
-NodeJs
+Maven, NodeJs
 
 ## Membres:
   - Cuny Louis
@@ -19,11 +17,16 @@ https://trello.com/b/nQdTXqca/atelier-2
 ## Installation :
 ```shell
 git clone git@github.com:Eaubert/GeoQuizz.git
+```
 
+Il faut régler l'adresse API dans les fichiers :
+  - admin/src/configApi/index.js
+  
+  - jeu/src/config/index.js
+
+```shell
 cd GeoQuizz/admin
-
 npm install
-
 npm run dev
 ```
 ```shell
