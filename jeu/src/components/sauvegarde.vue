@@ -66,18 +66,17 @@ name: 'app',
       for(var i=0;i<this.partie.parties.length;i++){
 
         if(this.partie.parties[i].partie.score>this.t1.score){
+          this.t2=this.t1
           this.t1={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score}
         }
         else if(this.partie.parties[i].partie.score>this.t2.score){
+          this.t3=this.t2
           this.t2={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score}
         }
         else if(this.partie.parties[i].partie.score>this.t3.score){
           this.t3={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score}
         }
       }
-      console.log(this.t1.score)
-      console.log(this.t3.score)
-      console.log(this.t2.score)
     })
     .catch(function (error) {
     });

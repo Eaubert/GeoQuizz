@@ -45,7 +45,8 @@
         images: [],
         len: 0,
         jeu,
-        maps: []
+        maps: [],
+        l:0
       }
     },
     components: {
@@ -59,6 +60,17 @@
         alert('token invalide');
         router.push('/');
       }
+      api.get('/maps/' + this.$route.params.map+'/photos')
+        .then((response) => {
+          if(response.data.photos.length<10){
+            this.l=response.data.photos.length
+          }
+          else{
+            this.l=10
+          }
+        })
+        .catch(function (error) {
+        });
       api.get('/maps/' + this.$route.params.map)
         .then((response) => {
           this.maps = response.data;
