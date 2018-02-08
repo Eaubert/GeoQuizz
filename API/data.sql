@@ -1,5 +1,5 @@
-INSERT INTO map (id,ville, latitude, longitude,distance) VALUES ('1','nancy','48.6880756','6.1384176','100');
-INSERT INTO map (id,ville, latitude, longitude,distance) VALUES ('2','metz','49.1048318','6.1263667','150');
+INSERT INTO map (id,ville, latitude, longitude,distance) VALUES ('1','Nancy','48.6880756','6.1384176','100');
+INSERT INTO map (id,ville, latitude, longitude,distance) VALUES ('2','Metz','49.1048318','6.1263667','150');
 
 
 INSERT INTO photo (id,url, latitude, longitude, map_id) VALUES ('1','http://www.sciencespo.fr/students/sites/sciencespo.fr.students/files/campus-nancy-decouvrir-0.jpg?1515750403','48.6936184','6.18324129','1');

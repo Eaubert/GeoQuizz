@@ -135,6 +135,9 @@ public class Map implements Serializable {
                 .add("photos", Json.createObjectBuilder()
                         .add("href", "/maps/" + this.getId() + "/photos")
                         .build())
+                .add("parties", Json.createObjectBuilder()
+                        .add("href", "/maps/" + this.getId() + "/parties")
+                        .build())
                 .build();
     }
 }

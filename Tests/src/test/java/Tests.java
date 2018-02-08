@@ -1,4 +1,3 @@
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -6,20 +5,14 @@ import org.junit.runners.MethodSorters;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.math.BigDecimal;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Tests {
@@ -89,24 +82,7 @@ public class Tests {
 
 
     }
-    /*@Test
-    public void testBgetMap() {
-        JsonObject jsonRecupere = client
-                .target(this.uri_map)
-                .request(MediaType.APPLICATION_JSON)
-                .get(JsonObject.class);
-
-        assertTrue(jsonRecupere.getJsonObject("map").containsKey("id"));
-        assertTrue(jsonRecupere.getJsonObject("map").containsKey("distance"));
-        assertTrue(jsonRecupere.getJsonObject("map").getString("distance").contains("100"));
-        assertTrue(jsonRecupere.getJsonObject("map").containsKey("latitude"));
-        assertTrue(jsonRecupere.getJsonObject("map").getString("latitude").contains("6.656"));
-        assertTrue(jsonRecupere.getJsonObject("map").containsKey("longitude"));
-        assertTrue(jsonRecupere.getJsonObject("map").getString("longitude").contains("49.555"));
-        assertTrue(jsonRecupere.getJsonObject("map").containsKey("ville"));
-        assertTrue(jsonRecupere.getJsonObject("map").getString("ville").contains("Bogota"));
-    }*//*
-
+    /*
     @Test
     public void testGetPartie() {
         JsonObject jsonRecupere = client

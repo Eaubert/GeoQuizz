@@ -62,7 +62,7 @@ public class MapRessource {
 
     @GET
     @Path("{id}/photos")
-    public Response getMapPhotos(@PathParam("id") String id, @Context UriInfo uriInfo) throws Throwable {
+    public Response getMapPhotos(@PathParam("id") String id, @Context UriInfo uriInfo) {
         Map m = this.mm.findById(id);
         if (m == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -75,6 +75,24 @@ public class MapRessource {
         return Response.ok(Json.createObjectBuilder()
                 .add("type", "collection")
                 .add("photos", photos)
+                .build()).build();
+    }
+
+    @GET
+    @Path("{id}/parties")
+    public Response getMapParties(@PathParam("id") String id, @Context UriInfo uriInfo){
+        Map m = this.mm.findById(id);
+        if (m == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        JsonArrayBuilder parties = Json.createArrayBuilder();
+        m.getListPartie().forEach((p) -> {
+            JsonObject partie = p.buildJson();
+            parties.add(partie);
+        });
+        return Response.ok(Json.createObjectBuilder()
+                .add("type", "collection")
+                .add("parties", parties)
                 .build()).build();
     }
 
