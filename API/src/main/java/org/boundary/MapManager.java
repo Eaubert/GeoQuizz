@@ -27,7 +27,17 @@ public class MapManager {
     }
 
     public Map findByName(String ville) {
-        return this.em.find(Map.class, ville);
+        try {
+            List<Map> listMap = em.createQuery(
+                    "SELECT m FROM Map m WHERE ville = :nomville")
+                    .setParameter("nomville", ville)
+                    .getResultList();
+            return listMap.get(0);
+
+        }catch(Exception e){
+            return null;
+        }
+
     }
 
     public List<Map> findAll() {
