@@ -28,7 +28,7 @@
     },
     methods:{
       addPhoto(map){
-        router.push('/photo/'+map.id)
+        router.push('/photos/'+map.id)
       }
     }
   }

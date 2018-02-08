@@ -25,18 +25,18 @@ const router = new Router({
       component:serie
     },
     {
-      path:'/photo/:idMap',
-      name:'photo',
+      path:'/photos/:idMap',
+      name:'photos',
       component:photo
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name == 'Connexion' && sessionStorage.getItem("isConnected") == "Connect") {
+  if (to.name == 'Connexion' && localStorage.getItem("token") != undefined) {
     next({name: 'admin' })
   }
-  else if (to.name != 'Connexion' && sessionStorage.getItem("isConnected") != "Connect" ){
+  else if (to.name != 'Connexion' && localStorage.getItem("token") == undefined ){
     next({name: 'Connexion' })
   }
   else{

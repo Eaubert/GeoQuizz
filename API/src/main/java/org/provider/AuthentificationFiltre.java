@@ -18,7 +18,6 @@ import java.security.Key;
 
 @Secured
 @Provider
-@Priority(Priorities.AUTHENTICATION)
 public class AuthentificationFiltre implements ContainerRequestFilter {
 
     @Inject

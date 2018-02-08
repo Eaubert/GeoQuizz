@@ -7,7 +7,7 @@
 
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
-      <form @submit="addPhoto">
+      <form @submit="addPhoto"  enctype="multipart/form-data">
         <div class="form-group">
           <label for="lat" class="decale">Lattitude</label>
           <input id="lat"  v-model="latitude" class="form-control" type="number" step="0.000001" required>
@@ -36,7 +36,7 @@
 
   export default {
 
-    name: 'photo',
+    name: 'photos',
     data () {
       return {
         idmap : "",

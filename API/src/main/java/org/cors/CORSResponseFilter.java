@@ -1,5 +1,7 @@
 package org.cors;
 
+import javax.annotation.Priority;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -20,8 +22,9 @@ public class CORSResponseFilter implements ContainerResponseFilter {
         logger.log(Level.INFO, "Execution du filtre Response: {0}", requestCtx.getRequest().getMethod());
         responseCtx.getHeaders().add("Access-Control-Allow-Origin", "*");
         responseCtx.getHeaders().add("Access-Control-Allow-Credentials", "true");
-        responseCtx.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        responseCtx.getHeaders().add("Access-Control-Allow-Headers", "Content-Type, Origin, Accept");
+        responseCtx.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, AUTHORIZATION");
+        responseCtx.getHeaders().add("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, Authorization");
+        responseCtx.getHeaders().add("Access-Control-Expose-Headers","Content-Type, Origin, Accept, Authorization");
         responseCtx.getHeaders().add("Access-Control-Allow-Credentials", "true");
     }
 
