@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from '@/components/home'
 import jeu from '@/components/jeu'
 import save from '@/components/sauvegarde'
-import regles from '@/components/regles'
 
 Vue.use(Router)
 
@@ -20,14 +19,9 @@ export default new Router({
       component: jeu
     },
     {
-      path: '/sauvegarde/:score/:id',
+      path: '/sauvegarde/:map/:score/:id',
       name: 'save',
       component: save
-    },
-    {
-      path: '/regles',
-      name: 'regles',
-      component: regles
     }
   ]
 })

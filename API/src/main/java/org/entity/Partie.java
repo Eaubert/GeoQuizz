@@ -34,6 +34,10 @@ public class Partie implements Serializable {
     @NotNull
     private String joueur;
 
+    @NotNull
+    private String difficulte;
+
+
     @ManyToOne
     private Map map = new Map();
 
@@ -43,12 +47,13 @@ public class Partie implements Serializable {
     public Partie() {
     }
 
-    public Partie(Integer nbPhotos, String joueur, Map map) {
+    public Partie(Integer nbPhotos, String joueur, Map map, String difficulte) {
         this.nbPhotos = nbPhotos;
         this.statut = "en cours";
         this.score = 0;
         this.joueur = joueur;
         this.map = map;
+        this.difficulte = difficulte;
     }
 
     public String getId() {
@@ -115,6 +120,13 @@ public class Partie implements Serializable {
         this.photos = photos;
     }
 
+    public String getDifficulte() {
+        return difficulte;
+    }
+
+    public void setDifficulte(String difficulte) {
+        this.difficulte = difficulte;
+    }
 
     public JsonObject buildJson() {
         return Json.createObjectBuilder()
@@ -135,6 +147,8 @@ public class Partie implements Serializable {
         return Json.createObjectBuilder()
                 .add("id", this.id)
                 .add("token", this.token)
+                .add("joueur", this.joueur)
+                .add("difficulte", this.difficulte)
                 .add("statut", this.statut)
                 .add("score", this.score)
                 .add("nbPhotos", this.nbPhotos)
