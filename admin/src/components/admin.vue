@@ -1,8 +1,16 @@
 <template>
+
     <div class="admin container">
+
         <div class="row">
             <div class="jumbotron">
                 <h1>Administrateur</h1>
+
+                <div class="row">
+                  <div class="col-sm-10"></div>
+                  <div><button  v-on:click="deconnexion()" class="btn-primary col-sm-2">Deconnexion</button></div>
+                </div>
+
             </div>
 
             <div class="col-sm-6">
@@ -42,6 +50,7 @@
             </div>
         </div>
     </div>
+  </div>
 
 
 </template>
@@ -86,6 +95,10 @@
           alert("Veuillez vous reconnecter")
           router.push('/')
         })
+      },
+      deconnexion(){
+        localStorage.removeItem("token")
+        router.push('/')
       }
     }
   }

@@ -75,7 +75,7 @@ export default {
             router.push('/admin')
           })
       }).catch((error)=> {
-          alert(error);
+          alert("Une erreur est survenue");
       })
     },
 
