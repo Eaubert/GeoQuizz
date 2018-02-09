@@ -110,7 +110,7 @@ public class PartieRessource {
     @POST
     public Response addPartie(JsonObject json) {
 
-        String joueur, id_map;
+        String joueur, id_map, difficulte;
         Integer nbPhotos;
         Map map;
 
@@ -119,12 +119,18 @@ public class PartieRessource {
             joueur = json.getString("joueur");
             id_map = json.getString("idMap");
 
+            if (json.containsKey("difficulte")) {
+                difficulte = json.getString("difficulte");
+            } else {
+                difficulte = "normal";
+            }
+
             map = this.mm.findById(id_map);
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        Partie newPartie = this.pm.save(new Partie(nbPhotos, joueur, map));
+        Partie newPartie = this.pm.save(new Partie(nbPhotos, joueur, map, difficulte));
         URI uri = uriInfo.getAbsolutePathBuilder().path(newPartie.getId()).build();
         return Response.ok(newPartie.oneToJson()).build();
     }
@@ -136,6 +142,7 @@ public class PartieRessource {
         try {
             Partie partie = pm.findById(id);
             partie.setScore(Integer.parseInt(json.getString("score")));
+            partie.setDifficulte(json.getString("difficulte"));
             pm.update(partie);
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();

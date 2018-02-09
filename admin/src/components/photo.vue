@@ -3,6 +3,11 @@
         <div class="row">
             <div class="jumbotron">
                 <h1>Photo</h1>
+
+                <div class="row">
+                  <div class="col-sm-10"></div>
+                  <div><button  v-on:click="deconnexion()" class="btn-primary col-sm-2">Deconnexion</button></div>
+                </div>
             </div>
 
             <div class="col-sm-3"></div>
@@ -70,19 +75,28 @@
             'Content-Type': 'multipart/form-data',
             'Authorization': localStorage.getItem("token")
           }
-        })
+        }).then((response) => {
 
-        confApi.post('/photos/?idMap=' + this.$route.params.idMap, photo, {headers: {Authorization: localStorage.getItem("token")}}).then((response) => {
-          /*router.push('/photos/' + this.$route.params.idMap)*/
-          this.latitude = '';
-          this.longitude = '';
-          this.url = '';
+          confApi.post('/photos/?idMap=' + this.$route.params.idMap, photo, {headers: {Authorization: localStorage.getItem("token")}}).then((response) => {
+            /*router.push('/photos/' + this.$route.params.idMap)*/
+            this.latitude = '';
+            this.longitude = '';
+            this.url = '';
+            alert("Photo ajoutée")
+            location.reload()
+          }).catch((error) => {
+            localStorage.removeItem("token")
+            alert("Veuillez vous reconnecter")
+            router.push('/')
+          })
+          
         }).catch((error) => {
-          console.log(error)
-          localStorage.removeItem("token")
-          alert("Veuillez vous reconnecter")
-          router.push('/')
+          alert("Une erreur est survenue")
         })
+      },
+      deconnexion(){
+        localStorage.removeItem("token")
+        router.push('/')
       }
     }
   }

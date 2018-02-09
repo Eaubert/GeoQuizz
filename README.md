@@ -2,29 +2,46 @@
 
 ## Prérecquis
 
-NodeJs
+Maven, NodeJs
 
 ## Membres:
   - Cuny Louis
   - Sipp Hugo
-  - Lefevre Alexandre 
+  - Lefevre Alexandre
   - Aubert Enzo
 
-## Trello : 
+## Trello :
 
 https://trello.com/b/nQdTXqca/atelier-2
 
 ## Installation :
-
+```shell
 git clone git@github.com:Eaubert/GeoQuizz.git
+```
 
+Il faut régler l'adresse API dans les fichiers :
+  - admin/src/configApi/index.js
+  
+  - jeu/src/config/index.js
+
+```shell
 cd GeoQuizz/admin
-
 npm install
-
 npm run dev
+```
+```shell
+cd GeoQuizz/jeu
+npm install
+npm run dev
+```
+```shell
+cd GeoQuizz/API
+mvn clean install
+cp target/GeoQuizz.war [your deployement directory]
+```
+Charger data.sql dans la base de données.
 
-## Règles 
+## Règles
 
 ### But du jeu :
 
@@ -42,10 +59,10 @@ Les 10 photos ont été placées , la partie est finie , le joueur voit son scor
 
 ### Temps de réponse :
 
-Moins de 5 secondes = points marqués *4.
+Moins de 5 secondes = points marqués multipliés par 4.
 
-Moins de 10 secondes = points marqués *2
+Moins de 10 secondes = points marqués multipliés par 2
 
 ### Niveau de difficultés :
-	
+
 Les niveaux de difficultés changent juste les distances pour marquer des points.
