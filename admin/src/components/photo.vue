@@ -46,7 +46,7 @@
     },
     methods:{
       addPhoto(){
-        console.log("test")
+        
       }
     }
   }
