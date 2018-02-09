@@ -13,6 +13,7 @@ Maven, NodeJs
 ## Trello :
 
 https://trello.com/b/nQdTXqca/atelier-2
+https://www.lucidchart.com/invitations/accept/99081550-8601-4446-8ab0-cbaa90646440
 
 ## Installation :
 ```shell
