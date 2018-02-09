@@ -100,11 +100,11 @@
     },
     methods: {
       onMapClick (e) {
-        if (this.len < 10) {
+        if (this.len < this.l) {
           jeu.ilng = this.images.photos[this.len].photo.longitude;
           jeu.ilat = this.images.photos[this.len].photo.latitude;
           this.len += 1;
-          if (this.len != 10) {
+          if (this.len != this.l) {
             var fn = this.images.photos[this.len].photo.url
             if (fn.substring(0, 4) == 'http') {
               jeu.url = fn

@@ -2,6 +2,7 @@ package org.boundary;
 
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.provider.Secured;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +27,7 @@ public class UploadService {
     }
 
     @POST
+    @Secured
     @Path("upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFichier(MultipartFormDataInput input) {

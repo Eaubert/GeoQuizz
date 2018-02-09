@@ -78,7 +78,7 @@
         }).then((response) => {
 
           confApi.post('/photos/?idMap=' + this.$route.params.idMap, photo, {headers: {Authorization: localStorage.getItem("token")}}).then((response) => {
-            /*router.push('/photos/' + this.$route.params.idMap)*/
+
             this.latitude = '';
             this.longitude = '';
             this.url = '';
@@ -89,7 +89,7 @@
             alert("Veuillez vous reconnecter")
             router.push('/')
           })
-          
+
         }).catch((error) => {
           alert("Une erreur est survenue")
         })
