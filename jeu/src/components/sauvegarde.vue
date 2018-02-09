@@ -14,6 +14,7 @@
       <th>Map</th>
       <th>Nom</th>
       <th>Score</th>
+      <th>Difficultés</th>
     </tr>
   </thead>
   <tbody>
@@ -22,18 +23,21 @@
       <td>{{map}}</td>
       <td>{{t1.nom}}</td>
       <td>{{t1.score}}</td>
+      <td>{{t1.Difficulte}}</td>
     </tr>
     <tr>
       <th scope="row">2</th>
       <td>{{map}}</td>
       <td>{{t2.nom}}</td>
       <td>{{t2.score}}</td>
+      <td>{{t2.Difficulte}}</td>
     </tr>
     <tr>
       <th scope="row">3</th>
       <td>{{map}}</td>
       <td>{{t3.nom}}</td>
       <td>{{t3.score}}</td>
+      <td>{{t3.Difficulte}}</td>
     </tr>
   </tbody>
 </table>
@@ -52,9 +56,9 @@ name: 'app',
     return {
       score:'Votre score est de ',
       partie:[],
-      t1:{"nom":"","score":0},
-      t2:{"nom":"","score":0},
-      t3:{"nom":"","score":0},
+      t1:{"nom":"","score":0,"Difficulte":""},
+      t2:{"nom":"","score":0,"Difficulte":""},
+      t3:{"nom":"","score":0,"Difficulte":""},
       map:""
     }
   },
@@ -67,14 +71,14 @@ name: 'app',
 
         if(this.partie.parties[i].partie.score>this.t1.score){
           this.t2=this.t1
-          this.t1={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score}
+          this.t1={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score,"Difficulte":this.partie.parties[i].partie.difficulte}
         }
         else if(this.partie.parties[i].partie.score>this.t2.score){
           this.t3=this.t2
-          this.t2={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score}
+          this.t2={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score,"Difficulte":this.partie.parties[i].partie.difficulte}
         }
         else if(this.partie.parties[i].partie.score>this.t3.score){
-          this.t3={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score}
+          this.t3={"nom":this.partie.parties[i].partie.joueur,"score":this.partie.parties[i].partie.score,"Difficulte":this.partie.parties[i].partie.difficulte}
         }
       }
     })
@@ -90,7 +94,7 @@ name: 'app',
   },
   methods:{
     save(){
-    api.put('/parties/'+this.$route.params.id,{score:this.$route.params.score})
+    api.put('/parties/'+this.$route.params.id,{score:this.$route.params.score,difficulte:sessionStorage.getItem('diff')})
     .then((response) => {
       alert('Partie sauvegardée')
     })

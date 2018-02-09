@@ -11,8 +11,7 @@
     <label for="exampleSelect1">Ville</label>
     <select required class="form-control" id="exampleSelect1"  v-model="selected">
     <option disabled value="">Choisissez</option>
-    <option value="1">Nancy</option>
-    <option value="2">Metz</option>
+    <option  v-for="(v,index) in ville">{{v.map.ville}}</option>
     </select>
   </div>
   <div class="form-group">
@@ -43,12 +42,27 @@ name: 'app',
       selected:'',
       name:'',
       diff:'',
-      l:0,
+      ville:[]
     }
+  },
+  created(){
+    api.get('/maps')
+    .then((response) => {
+      this.ville=response.data.maps
+    })
+    .catch(function (error) {
+      alert('Service indisponible');
+    });
   },
   methods:{
     start(){
-      api.post('/parties',{nbPhotos:"10",joueur:this.name,idMap:this.selected})
+    var select;
+      for(var i=0;i<this.ville.length;i++){
+        if(this.ville[i].map.ville==this.selected){
+          select=this.ville[i].map.id
+        }
+      }
+      api.post('/parties',{nbPhotos:"10",joueur:this.name,idMap:select})
       .then((response) => {
         this.partie=response.data;
         sessionStorage.setItem('user',this.partie.partie.token);
